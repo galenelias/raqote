@@ -595,6 +595,16 @@ mod tests {
         assert_eq!(dest.get_data(), &vec![blue, green, red, 0][..]);
         dest.copy_surface(&src, intrect(0, 0, 2, 2), IntPoint::new(1, 1));
         assert_eq!(dest.get_data(), &vec![blue, green, red, white][..]);
+
+        let mut dest = DrawTarget::new(2, 2);
+        dest.copy_surface(&src, intrect(-1, -1, 1, 1), IntPoint::new(0, 0));
+        assert_eq!(dest.get_data(), &vec![0, 0, 0, white][..]);
+        dest.copy_surface(&src, intrect(1, -1, 3, 1), IntPoint::new(0, 0));
+        assert_eq!(dest.get_data(), &vec![0, 0, red, white][..]);
+        dest.copy_surface(&src, intrect(-1, 1, 1, 3), IntPoint::new(0, 0));
+        assert_eq!(dest.get_data(), &vec![0, green, red, white][..]);
+        dest.copy_surface(&src, intrect(1, 1, 3, 3), IntPoint::new(0, 0));
+        assert_eq!(dest.get_data(), &vec![blue, green, red, white][..]);
     }
 
     #[test]
